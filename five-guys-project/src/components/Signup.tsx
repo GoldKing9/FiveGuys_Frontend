@@ -133,7 +133,7 @@ const Signup = () => {
       <ToggleDiv>
         <ToggleHandler/>
       </ToggleDiv>
-      <SignupHeader></SignupHeader>
+      <SignupHeader>FiveGuys IDE</SignupHeader>
       <Form>
         <Input
           placeholder='이메일'
@@ -185,7 +185,6 @@ const Signup = () => {
         >
           회원 가입
         </Submit>
-        <SigninPath>로그인 하기</SigninPath>
       </Form>
     </SignupContainer>
   );
@@ -197,36 +196,40 @@ const SignupContainer = styled.div`
   width: 31.25rem;
   height: 43.75rem;
   margin: auto;
-  padding: 0 0 24px;
   border-radius: 1.25rem;
+  border: 1px #DBBFF4 solid;
 `
 
 const ToggleDiv = styled.div`
   width: 100%;
-  height: 5rem;
+  height: 2.625rem;
 `
 
 const SignupHeader = styled.div`
   height: 4rem;
   display: flex;
-  align-items: center;
+  width: 20rem;
+  color: #DBBFF4;
+  font-size: 3.125rem;
+  margin: 1.25rem auto 3rem;
+  font-weight: bolder;
 `
 
 const Form = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  padding: 0 96px;
+  padding: 0 5rem 0 5rem;
   align-items: center;
 `
 
 const Input = styled.input.attrs<{ color?: boolean }>({ required: true })`
   display: block;
-  width: 25.375rem;
+  width: 100%;
   height: 3.125rem;
   font-size: 1.25rem;
   border-radius: 0.5rem;
-  border: 1px rgba(0, 0, 0, 0.3) solid;
+  border: 1px #DBBFF4 solid;
   text-indent: 0.75rem;
 
   &:focus {
@@ -240,29 +243,23 @@ const InputMessage = styled.p<{ color?: boolean }>`
   height: 0.75rem;
   margin: 0.375rem 0;
   font-family: 'Single Day', cursive;
-  width: 23.75rem;
+  width: 100%;
   color: ${(props) => props.color ? 'green' : 'red'};
   text-align: start;
+  text-indent: 0.75rem;
 `
 
 const Submit = styled.button`
   display: block;
-  width: 25.5rem;
+  width: 100%;
   height: 3.125rem;
-  background-color: greenyellow;
+  background-color: #DBBFF4;
   text-align: center;
   margin-top: 1.875rem;
   border: none;
   border-radius: 0.5rem;
   color: white;
   font-size: 1.25rem;
-  cursor: pointer;
-`
-
-const SigninPath = styled.div`
-  text-decoration: none;
-  color: greenyellow;
-  margin-top: 3.75rem;
   cursor: pointer;
 `
 

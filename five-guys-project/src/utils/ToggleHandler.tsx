@@ -38,7 +38,7 @@ export default ToggleHandler;
 const ToggleDiv = styled.div<{value: string}>`
   width: 200px;
   height: 42px;
-  background-color: greenyellow;
+  background-color: #DBBFF4;
   border: none;
   border-radius: 40px;
   position: relative;
@@ -47,18 +47,18 @@ const ToggleDiv = styled.div<{value: string}>`
 
   span {
     position: absolute;
-    width: 75px;
+    width: 100px;
     height: 36px;
     border-radius: 40px;
     background-color: white;
     transition: all 0.6s ease-in-out;
     z-index: 1;
-    margin: 3px 0;
+    margin: 3px 2px;
 
     ${({ value }) =>
       value === "로그인"
         ? "transform: translateX(0px)"
-        : "transform: translateX(120px)"
+        : "transform: translateX(96px)"
     }
   }
 `
@@ -85,12 +85,12 @@ const button = styled.button<{ value: string }>`
 
 const SigninButton = styled(button)`
   ${({ value }) => 
-    value === "로그인" ? "color: greenyellow;" : null
+    value === "로그인" ? "color: #DBBFF4;" : null
   }
 `
 
 const SignupButton = styled(button)`
   ${({ value }) => 
-    value === "회원가입" ? "color: greenyellow;" : null
+    value === "회원가입" ? "color: #DBBFF4;" : null
   }
 `
