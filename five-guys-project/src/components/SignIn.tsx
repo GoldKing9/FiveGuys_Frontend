@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import debounce from '../utils/debounce';
 import axios from 'axios';
 import styled from 'styled-components';
-import ToggleHandler from '../utils/ToggleHandler';
 import { setCookie } from '../utils/Cookies';
+
+
 
 const SignIn = () => {
   
@@ -97,71 +98,40 @@ const SignIn = () => {
   };
 
   return (
-    <SignupContainer>
-      <ToggleDiv>
-        <ToggleHandler/>
-      </ToggleDiv>
-      <SignupHeader>FiveGuys IDE</SignupHeader>
-      <Form>
-        <Input
-          placeholder='이메일'
-          type='email'
-          onChange={isValidEmail}
-          color={isValid.isValidEmail}
-        />
-        <InputMessage
-          color={isValid.isValidEmail}
-        >
-          {message.formEmailMessage}
-        </InputMessage>
-        <Input
-          placeholder='비밀번호'
-          type='password'
-          onChange={isValidPassword}
-          color={isValid.isValidPassword}
-        />
-        <InputMessage
-          color={isValid.isValidPassword}
-        >
-          {message.formPasswordMessage}
-        </InputMessage>
-        <Submit
-          disabled= {!(isValid.isValidEmail && isValid.isValidPassword)}
-          onClick={handleSignin}
-        >
-          로그인
-        </Submit>
-      </Form>
-    </SignupContainer>
+    <Form>
+      <Input
+        placeholder='이메일'
+        type='email'
+        onChange={isValidEmail}
+        color={isValid.isValidEmail}
+      />
+      <InputMessage
+        color={isValid.isValidEmail}
+      >
+        {message.formEmailMessage}
+      </InputMessage>
+      <Input
+        placeholder='비밀번호'
+        type='password'
+        onChange={isValidPassword}
+        color={isValid.isValidPassword}
+      />
+      <InputMessage
+        color={isValid.isValidPassword}
+      >
+        {message.formPasswordMessage}
+      </InputMessage>
+      <Submit
+        disabled= {!(isValid.isValidEmail && isValid.isValidPassword)}
+        onClick={handleSignin}
+      >
+        로그인
+      </Submit>
+    </Form>
   );
 };
 
 export default SignIn;
-
-const SignupContainer = styled.div`
-  width: 31.25rem;
-  height: 43.75rem;
-  margin: auto;
-  border-radius: 1.25rem;
-  border: 1px #DBBFF4 solid;
-  background-color: #FFFFFF;
-  opacity: 0.7;
-`
-
-const ToggleDiv = styled.div`
-  width: 100%;
-  height: 2.625rem;
-`
-
-const SignupHeader = styled.div`
-  height: 4rem;
-  display: flex;
-  width: 20rem;
-  color: #DBBFF4;
-  font-size: 3.125rem;
-  margin: 1.25rem auto 3rem;
-  font-weight: bolder;
-`
 
 const Form = styled.div`
   margin-top: 20px;
