@@ -93,4 +93,3 @@ const SignupButton = styled(button)`
   ${({ value }) => 
     value === "회원가입" ? "color: #DBBFF4;" : null
   }
-`

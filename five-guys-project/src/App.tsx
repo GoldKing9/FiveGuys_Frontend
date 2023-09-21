@@ -1,7 +1,7 @@
 import './App.css'
 // import styled from 'styled-components'
 import GlobalStyle from './GlobalStyle';
-import SignIn from './components/SignIn';
+import FirstPage from './pages/FirstPage';
 
 
 function App() {
@@ -9,8 +9,9 @@ function App() {
   return (
     <>
       <GlobalStyle/>
-      <SignIn/>
+      <FirstPage/>
     </>
+    
   )
 }
 
