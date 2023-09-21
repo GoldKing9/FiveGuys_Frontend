@@ -1,23 +1,19 @@
 import './App.css'
-import styled from 'styled-components'
+// import styled from 'styled-components'
+import GlobalStyle from './GlobalStyle';
+import SignIn from './components/SignIn';
+
 
 function App() {
 
   return (
-    <Wrapper>
-      <Title>Hello, styled-components!</Title>
-    </Wrapper>
+    <>
+      <GlobalStyle/>
+      <SignIn/>
+    </>
   )
 }
 
 export default App
 
-const Wrapper = styled.div`
-  text-align: center;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-  color: #333;
-`;
 
