@@ -1,15 +1,14 @@
 import './App.css'
-import GlobalStyle from './GlobalStyle';
 import FirstPage from './pages/FirstPage';
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
-
+import GlobalStyle from './GlobalStyle';
 
 function App() {
 
   return (
     <BrowserRouter>
+      <GlobalStyle/>
       <Routes>
-        <GlobalStyle/>
         <Route 
           path='/' 
           element={<FirstPage 

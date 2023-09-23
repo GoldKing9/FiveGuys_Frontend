@@ -3,6 +3,7 @@ import SignIn from '../components/SignIn';
 import SignUp from '../components/Signup';
 import ToggleHandler from '../utils/ToggleHandler';
 import styled from 'styled-components';
+// import GlobalStyle from '../GlobalStyle';
 
 interface FirstPageProps {
   changeMode: () => void
@@ -19,6 +20,7 @@ const FirstPage: React.FC<FirstPageProps> = () => {
   }
 
   return (
+    <>
     <Container>
       <ToggleDiv>
         <ToggleHandler changeMode={changeMode} value={value}/>
@@ -29,6 +31,7 @@ const FirstPage: React.FC<FirstPageProps> = () => {
         (<SignUp/>)
       }
     </Container>
+    </>
   );
 };
 
