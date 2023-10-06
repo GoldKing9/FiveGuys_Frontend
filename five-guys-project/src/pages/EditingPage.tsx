@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileCirclePlus, faFileCircleMinus, faFolderPlus, faFolderMinus, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import FileTree from '../components/FileTree';
+import CodeEditor from '../components/CodeEditor';
+
 
 const EditingPage = () => {
+
+  const [fontSize, setFontSize] = useState(16);
+
+  const handleFontSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if(e.target.value !== "") setFontSize(Number(e.target.value));
+  };
 
   return (
     <>
@@ -26,6 +34,13 @@ const EditingPage = () => {
           </OneTouchButtonHeader>
           <EditingPartHeader>
             <RepoNameDiv>Hyungjun's Repository</RepoNameDiv>
+            <FontSizeController onChange={handleFontSizeChange}>
+              <option value="" selected>FontSize</option>
+              <option value="12">12</option>
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+            </FontSizeController>
             <ToggleDiv></ToggleDiv>
             <InviteButtonDiv></InviteButtonDiv>
           </EditingPartHeader>
@@ -50,7 +65,9 @@ const EditingPage = () => {
               <FileTree/>
             </FileTreeContainer>
           </DirectoryContainer>
-          <EditingContainer></EditingContainer>
+          <EditingContainer>
+            <CodeEditor fontSize={fontSize}/>
+          </EditingContainer>
         </EditingBody>
       </PageContainer> 
     </>
@@ -62,7 +79,7 @@ export default EditingPage;
 const PageContainer = styled.div`
   width: 100vw;
   height: calc(100vh - 6.25rem);
-  border: 1px #ebebeb solid;
+  border: 1px #ebebeba7 solid;
   background-color: #383142;
   overflow: hidden;
 `
@@ -70,7 +87,7 @@ const PageContainer = styled.div`
 const EditingHeader = styled.div`
   width: 100%;
   height: 4.625rem;
-  border-bottom: 1px #ebebeb solid;
+  border-bottom: 1px #ebebeba7 solid;
   display: flex;
 `
 
@@ -84,7 +101,7 @@ const EditingBody = styled.div`
 const DirectoryContainer = styled.div`
   width: 18.75rem;
   height: 100%;
-  border-right: 1px #ebebeb solid;
+  border-right: 1px #ebebeba7 solid;
 `
 
 const EditingContainer = styled.div`
@@ -95,7 +112,7 @@ const EditingContainer = styled.div`
 const OneTouchButtonDiv = styled.div`
   width: 100%;
   height: 4rem;
-  border-bottom: 1px #ebebeb solid;
+  border-bottom: 1px #ebebeba7 solid;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -185,6 +202,16 @@ const FileTreeContainer = styled.div`
   text-align: start;
   text-indent: 1.5rem;
   margin-top: 1rem;
+`
+
+const FontSizeController = styled.select`
+  height: 1.25rem;
+  width: 5rem;
+  background-color: #E5CCF7;
+  border: none;
+  border-radius: 0.25rem;
+  text-indent: 0.25rem;
+  font-weight: bolder;
 `
 
 

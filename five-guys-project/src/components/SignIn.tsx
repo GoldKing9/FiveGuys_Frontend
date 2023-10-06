@@ -81,6 +81,8 @@ const SignIn = () => {
         console.log(res.data);
   
         const refreshToken = res.data.refreshToken;
+        const accessToken = res.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
 
         if(refreshToken) {
           setCookie("refreshToken", refreshToken, {
