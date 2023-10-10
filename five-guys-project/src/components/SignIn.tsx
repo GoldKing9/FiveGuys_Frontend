@@ -73,17 +73,18 @@ const SignIn = () => {
 
   const handleSignin = async () => {
     await axios
-      .post('/api/auth/login', {
+      .post('http://www.burgerclub.shop/api/auth/login', {
         email: form.email,
         password: form.password,
       })
       .then(function (res) {
         console.log(res.data);
-  
-        const refreshToken = res.data.refreshToken;
-        const accessToken = res.data.accessToken;
+
+        const accessToken = res.data.data.accessToken;
         localStorage.setItem("accessToken", accessToken);
 
+        const refreshToken = res.data.refreshToken;
+        
         if(refreshToken) {
           setCookie("refreshToken", refreshToken, {
             path: "/",
@@ -124,7 +125,7 @@ const SignIn = () => {
         {message.formPasswordMessage}
       </InputMessage>
       <Submit
-        disabled= {!(isValid.isValidEmail && isValid.isValidPassword)}
+        // disabled= {!(isValid.isValidEmail && isValid.isValidPassword)}
         onClick={handleSignin}
       >
         로그인
