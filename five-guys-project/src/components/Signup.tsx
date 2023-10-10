@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import debounce from '../utils/debounce';
 import axios from 'axios';
 import styled from 'styled-components';
+import ToggleHandler from '../utils/ToggleHandler';
+import {toast, ToastContainer} from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   
@@ -46,6 +49,8 @@ const Signup = () => {
     formNicknameMessage: "",
     formCheckPasswordMessage: ""
   });
+
+  const navigate = useNavigate();
 
   const emailRegexp =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegexp = /^(?=.*[0-9])(?=.*[a-z])[0-9a-z]{4,12}$/;
@@ -119,67 +124,85 @@ const Signup = () => {
       })
       .then(function (res) {
         console.log(res);
-        alert("회원가입이 완료되었습니다.");
+        toast.success(<h3>회원가입이 완료되었습니다.<br/>로그인 하세요😎</h3>, {
+          position: "top-right",
+          autoClose: 1000
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
       .catch(function (error) {
         console.log(error);
-        alert(error);
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message + "😭", {
+          position: "top-right",
+          autoClose: 1000
+        });
+        
       });
   };
 
   return (
-    <Form>
-      <Input
-        placeholder='이메일'
-        type='email'
-        onChange={isValidEmail}
-        color={isValid.isValidEmail}
-      />
-      <InputMessage
-        color={isValid.isValidEmail}
-      >
-        {message.formEmailMessage}
-      </InputMessage>
-      <Input
-        placeholder='닉네임'
-        type='nickname'
-        onChange={isValidNickname}
-        color={isValid.isValidNickname}
-      />
-      <InputMessage
-        color={isValid.isValidNickname}
-      >
-        {message.formNicknameMessage}
-      </InputMessage>
-      <Input
-        placeholder='비밀번호'
-        type='password'
-        onChange={isValidPassword}
-        color={isValid.isValidPassword}
-      />
-      <InputMessage
-        color={isValid.isValidPassword}
-      >
-        {message.formPasswordMessage}
-      </InputMessage>
-      <Input
-        placeholder='비밀번호 확인'
-        type='password'
-        onChange={CheckPassword}
-        color={isValid.isValidCheckPassword}
-      />
-      <InputMessage
-        color={isValid.isValidCheckPassword}
-      >
-        {message.formCheckPasswordMessage}
-      </InputMessage>
-      <Submit
-        // disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname && message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
-        onClick={onSubmit}
-      >
-        회원 가입
-      </Submit>
-    </Form>
+    <SignupContainer>
+      <ToastContainer/>
+      <ToggleDiv>
+        <ToggleHandler/>
+      </ToggleDiv>
+      <SignupHeader>FiveGuys IDE</SignupHeader>
+      <Form>
+        <Input
+          placeholder='이메일'
+          type='email'
+          onChange={isValidEmail}
+          color={isValid.isValidEmail}
+        />
+        <InputMessage
+          color={isValid.isValidEmail}
+        >
+          {message.formEmailMessage}
+        </InputMessage>
+        <Input
+          placeholder='닉네임'
+          type='nickname'
+          onChange={isValidNickname}
+          color={isValid.isValidNickname}
+        />
+        <InputMessage
+          color={isValid.isValidNickname}
+        >
+          {message.formNicknameMessage}
+        </InputMessage>
+        <Input
+          placeholder='비밀번호'
+          type='password'
+          onChange={isValidPassword}
+          color={isValid.isValidPassword}
+        />
+        <InputMessage
+          color={isValid.isValidPassword}
+        >
+          {message.formPasswordMessage}
+        </InputMessage>
+        <Input
+          placeholder='비밀번호 확인'
+          type='checkpassword'
+          onChange={CheckPassword}
+          color={isValid.isValidCheckPassword}
+        />
+        <InputMessage
+          color={isValid.isValidCheckPassword}
+        >
+          {message.formCheckPasswordMessage}
+        </InputMessage>
+        <Submit
+          onClick={onSubmit}
+          disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname || message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
+        >
+          회원 가입
+        </Submit>
+      </Form>
+    </SignupContainer>
   );
 };
 
@@ -232,4 +255,3 @@ const Submit = styled.button`
   font-size: 1.25rem;
   cursor: pointer;
 `
-
