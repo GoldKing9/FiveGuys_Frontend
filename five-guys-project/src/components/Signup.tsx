@@ -6,8 +6,6 @@ import ToggleHandler from '../utils/ToggleHandler';
 import {toast, ToastContainer} from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
-
-
 const Signup = () => {
   
   interface form {
@@ -199,6 +197,7 @@ const Signup = () => {
         </InputMessage>
         <Submit
           onClick={onSubmit}
+          disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname || message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
         >
           회원 가입
         </Submit>
@@ -208,29 +207,6 @@ const Signup = () => {
 };
 
 export default Signup;
-
-const SignupContainer = styled.div`
-  width: 31.25rem;
-  height: 43.75rem;
-  margin: auto;
-  border-radius: 1.25rem;
-  border: 1px #DBBFF4 solid;
-`
-
-const ToggleDiv = styled.div`
-  width: 100%;
-  height: 2.625rem;
-`
-
-const SignupHeader = styled.div`
-  height: 4rem;
-  display: flex;
-  width: 20rem;
-  color: #DBBFF4;
-  font-size: 3.125rem;
-  margin: 1.25rem auto 3rem;
-  font-weight: bolder;
-`
 
 const Form = styled.div`
   margin-top: 20px;
