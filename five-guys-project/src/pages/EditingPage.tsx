@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import FileTree from '../components/FileTree';
 import CodeEditor from '../components/CodeEditor';
 
-
 const EditingPage = () => {
 
   const [fontSize, setFontSize] = useState(16);
@@ -200,7 +199,6 @@ const FileTreeContainer = styled.div`
   width: 100%;
   height: calc(100% - 4.625rem);
   text-align: start;
-  text-indent: 1.5rem;
   margin-top: 1rem;
 `
 
@@ -213,6 +211,3 @@ const FontSizeController = styled.select`
   text-indent: 0.25rem;
   font-weight: bolder;
 `
-
-
-
