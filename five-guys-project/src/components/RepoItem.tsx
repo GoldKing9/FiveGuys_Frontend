@@ -38,7 +38,7 @@ const RepoItem: React.FC<RepoItemProps> = ({
         }
       );
       if (res.status === 200 && onEdit) {
-        const updatedDate = new Date().toISOString();
+        const updatedDate = new Date().toISOString().split("T")[0];
         onEdit(repo.repoId, editedName, updatedDate);
         setIsEditing(false);
       } else {

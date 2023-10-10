@@ -49,8 +49,9 @@ const CreateRepoForm: React.FC<CreateRepoFormProps> = ({
         const now = new Date().toISOString().split("T")[0];
 
         if (res.data.data) {
+          console.log(res.data)
           const newRepo: RepoType = {
-            repoId: res.data.data.projectId,
+            repoId: res.data.data.repoId,
             repoName: repoName,
             createdAt: now,
             updatedAt: now,
