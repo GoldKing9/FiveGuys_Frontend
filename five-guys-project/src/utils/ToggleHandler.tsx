@@ -1,13 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 
-interface ToggleHandlerProps {
-  changeMode: (type: string) => void;
-  value: string;
-}
+const ToggleHandler = () => {
+  
+  const [value, setValue] = useState<string>("로그인");
 
-const ToggleHandler: React.FC<ToggleHandlerProps> = ({ changeMode, value}) => {
+  const changeMode = (type: string) => {
+    if (type === "로그인") {
+      setValue("로그인");
+    } else setValue("회원가입");
+  }
   
   return (
     <ToggleDiv value= {value}>
@@ -90,4 +93,4 @@ const SignupButton = styled(button)`
   ${({ value }) => 
     value === "회원가입" ? "color: #DBBFF4;" : null
   }
-`  
+`
