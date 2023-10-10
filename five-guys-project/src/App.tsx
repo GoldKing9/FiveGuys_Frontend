@@ -1,6 +1,7 @@
 import './App.css'
 import FirstPage from './pages/FirstPage';
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
+import { MainPage } from './pages/MainPage';
 import GlobalStyle from './GlobalStyle';
 
 function App() {
@@ -17,9 +18,12 @@ function App() {
             }}
           />}
         />
+        <Route 
+          path='/main'
+          element={<MainPage />}
+          />
       </Routes>
     </BrowserRouter>
-    
   )
 }
 

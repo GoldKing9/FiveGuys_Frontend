@@ -84,7 +84,7 @@ const Signup = () => {
   const isValidNickname = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 
     const currentNickname = e.target.value;
-    setForm({...form, email: currentNickname});
+    setForm({...form, nickname: currentNickname});
     console.log(currentNickname);
 
     if(!nicknameRegexp.test(currentNickname)) {
@@ -112,7 +112,7 @@ const Signup = () => {
 
   const onSubmit = async () => {
     await axios
-      .post('/api/auth/signup', {
+      .post('http://www.burgerclub.shop/api/auth/signup', {
         email: form.email,
         password: form.password,
         nickname: form.nickname
@@ -174,7 +174,7 @@ const Signup = () => {
         {message.formCheckPasswordMessage}
       </InputMessage>
       <Submit
-        disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname && message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
+        // disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname && message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
         onClick={onSubmit}
       >
         회원 가입
