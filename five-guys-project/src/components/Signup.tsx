@@ -3,6 +3,10 @@ import debounce from '../utils/debounce';
 import axios from 'axios';
 import styled from 'styled-components';
 import ToggleHandler from '../utils/ToggleHandler';
+import {toast, ToastContainer} from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Signup = () => {
   
@@ -48,6 +52,8 @@ const Signup = () => {
     formCheckPasswordMessage: ""
   });
 
+  const navigate = useNavigate();
+
   const emailRegexp =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegexp = /^(?=.*[0-9])(?=.*[a-z])[0-9a-z]{4,12}$/;
   const nicknameRegexp = /^[A-Za-z0-9가-힣_()]{4,12}$/;
@@ -85,7 +91,7 @@ const Signup = () => {
   const isValidNickname = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 
     const currentNickname = e.target.value;
-    setForm({...form, email: currentNickname});
+    setForm({...form, nickname: currentNickname});
     console.log(currentNickname);
 
     if(!nicknameRegexp.test(currentNickname)) {
@@ -104,32 +110,44 @@ const Signup = () => {
 
     if(form.password !== currentCheckPassword) {
       setIsValid({...isValid, isValidCheckPassword: false});
-      setMessage({...message, formNicknameMessage: "서로 다른 비밀번호 입니다!"});
+      setMessage({...message, formCheckPasswordMessage: "서로 다른 비밀번호 입니다!"});
     } else {
       setIsValid({...isValid, isValidCheckPassword: true});
-      setMessage({...message, formNicknameMessage: "같은 비밀번호 입니다."});
+      setMessage({...message, formCheckPasswordMessage: "같은 비밀번호 입니다."});
     }
   }, 800);
 
   const onSubmit = async () => {
     await axios
-      .post('/api/auth/signup', {
+      .post('http://www.burgerclub.shop/api/auth/signup', {
         email: form.email,
         password: form.password,
         nickname: form.nickname
       })
       .then(function (res) {
         console.log(res);
-        alert("회원가입이 완료되었습니다.");
+        toast.success(<h3>회원가입이 완료되었습니다.<br/>로그인 하세요😎</h3>, {
+          position: "top-right",
+          autoClose: 1000
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
       .catch(function (error) {
         console.log(error);
-        alert(error);
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message + "😭", {
+          position: "top-right",
+          autoClose: 1000
+        });
+        
       });
   };
 
   return (
     <SignupContainer>
+      <ToastContainer/>
       <ToggleDiv>
         <ToggleHandler/>
       </ToggleDiv>
@@ -180,7 +198,6 @@ const Signup = () => {
           {message.formCheckPasswordMessage}
         </InputMessage>
         <Submit
-          disabled= {!(isValid.isValidEmail && isValid.isValidPassword && isValid.isValidNickname && message.formCheckPasswordMessage === "서로 다른 비밀번호 입니다!")}
           onClick={onSubmit}
         >
           회원 가입
@@ -262,4 +279,3 @@ const Submit = styled.button`
   font-size: 1.25rem;
   cursor: pointer;
 `
-
