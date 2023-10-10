@@ -103,10 +103,10 @@ const Signup = () => {
 
     if(form.password !== currentCheckPassword) {
       setIsValid({...isValid, isValidCheckPassword: false});
-      setMessage({...message, formNicknameMessage: "서로 다른 비밀번호 입니다!"});
+      setMessage({...message, formCheckPasswordMessage: "서로 다른 비밀번호 입니다!"});
     } else {
       setIsValid({...isValid, isValidCheckPassword: true});
-      setMessage({...message, formNicknameMessage: "같은 비밀번호 입니다."});
+      setMessage({...message, formCheckPasswordMessage: "같은 비밀번호 입니다."});
     }
   }, 800);
 
@@ -164,7 +164,7 @@ const Signup = () => {
       </InputMessage>
       <Input
         placeholder='비밀번호 확인'
-        type='checkpassword'
+        type='password'
         onChange={CheckPassword}
         color={isValid.isValidCheckPassword}
       />
