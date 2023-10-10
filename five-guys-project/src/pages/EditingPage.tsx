@@ -200,7 +200,6 @@ const FileTreeContainer = styled.div`
   width: 100%;
   height: calc(100% - 4.625rem);
   text-align: start;
-  text-indent: 1.5rem;
   margin-top: 1rem;
 `
 

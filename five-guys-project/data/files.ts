@@ -1,22 +1,24 @@
 export const data = [
-  { id: "1", name: "Unread" },
-  { id: "2", name: "Threads" },
+  { path: "1", name: "Unread", type: "file" },
+  { path: "2", name: "Threads", type: "file" },
   {
-    id: "3",
+    path: "3",
     name: "Chat Rooms",
-    children: [
-      { id: "c1", name: "General" },
-      { id: "c2", name: "Random" },
-      { id: "c3", name: "Open Source Projects" },
+    type: "folder",
+    tree: [
+      { path: "c1", name: "General", type: "file" },
+      { path: "c2", name: "Random", type: "file" },
+      { path: "c3", name: "Open Source Projects", type: "file" },
     ],
   },
   {
-    id: "4",
+    path: "4",
     name: "Direct Messages",
-    children: [
-      { id: "d1", name: "Alice" },
-      { id: "d2", name: "Bob" },
-      { id: "d3", name: "Charlie" },
+    type: "folder",
+    tree: [ 
+      { path: "d1", name: "Alice", type: "file" },
+      { path: "d2", name: "Bob", type: "file" },
+      { path: "d3", name: "Charlie", type: "file" },
     ],
   },
 ];
