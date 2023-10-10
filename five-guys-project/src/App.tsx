@@ -1,15 +1,14 @@
 import './App.css'
-import GlobalStyle from './GlobalStyle';
 import FirstPage from './pages/FirstPage';
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 import { MainPage } from './pages/MainPage';
-
+import GlobalStyle from './GlobalStyle';
 
 function App() {
 
   return (
     <BrowserRouter>
-    <GlobalStyle/>
+      <GlobalStyle/>
       <Routes>
         <Route 
           path='/' 
@@ -25,7 +24,6 @@ function App() {
           />
       </Routes>
     </BrowserRouter>
-    
   )
 }
 

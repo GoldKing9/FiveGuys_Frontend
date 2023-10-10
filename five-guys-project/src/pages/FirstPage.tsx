@@ -18,27 +18,22 @@ const FirstPage: React.FC<FirstPageProps> = () => {
   };
 
   return (
-    // <AppContainer>
+    <>
       <Container>
         <ToggleDiv>
-          <ToggleHandler changeMode={changeMode} value={value} />
+          <ToggleHandler changeMode={changeMode} value={value}/>
         </ToggleDiv>
         <ContainerHeader>FiveGuys IDE</ContainerHeader>
-        {value === "로그인" ? <SignIn /> : <SignUp />}
+        {value === "로그인" ? 
+          (<SignIn/>) : 
+          (<SignUp/>)
+        }
       </Container>
-    // </AppContainer>
+    </>
   );
 };
 
 export default FirstPage;
-
-// const AppContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-//   width: 100%;
-// `;
 
 const Container = styled.div`
   width: 31.25rem;
