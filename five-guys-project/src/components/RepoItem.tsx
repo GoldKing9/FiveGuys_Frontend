@@ -38,7 +38,7 @@ const RepoItem: React.FC<RepoItemProps> = ({
         }
       );
       if (res.status === 200 && onEdit) {
-        const updatedDate = new Date().toISOString().split("T")[0];
+        const updatedDate = new Date().toLocaleString();
         onEdit(repo.repoId, editedName, updatedDate);
         setIsEditing(false);
       } else {
@@ -78,6 +78,11 @@ const RepoItem: React.FC<RepoItemProps> = ({
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  };
+
   return (
     <RepoItemContainer>
       {isEditing ? (
@@ -86,10 +91,12 @@ const RepoItem: React.FC<RepoItemProps> = ({
             value={editedName || ""}
             onChange={(e) => setEditedName(e.target.value)}
           />
-          <RepoItemButton onClick={handleSaveEdit}>Confirm</RepoItemButton>
-          <RepoItemButton onClick={() => setIsEditing(false)}>
-            Cancel
-          </RepoItemButton>
+          <ButtonGroup>
+            <RepoItemButton onClick={handleSaveEdit}>Confirm</RepoItemButton>
+            <RepoItemButton onClick={() => setIsEditing(false)}>
+              Cancel
+            </RepoItemButton>
+          </ButtonGroup>
         </>
       ) : (
         <>
@@ -111,8 +118,8 @@ const RepoItem: React.FC<RepoItemProps> = ({
             )}
           </div>
           <RepoItemInfo>{repo.repoName}</RepoItemInfo>
-          <RepoItemInfo>{repo.createdAt}</RepoItemInfo>
-          <RepoItemInfo>{repo.updatedAt}</RepoItemInfo>
+          <RepoItemInfo>{formatDate(repo.createdAt)}</RepoItemInfo>
+          <RepoItemInfo>{formatDate(repo.updatedAt)}</RepoItemInfo>
           <RepoItemInfo>{repo.invitedUserCnt}</RepoItemInfo>
           <RepoItemButton onClick={() => setIsEditing(true)}>
             Edit
@@ -148,7 +155,7 @@ const RepoItemButton = styled.button`
   background-color: #383142;
   color: #e5cff7;
   padding: 10px;
-  margin: 12px 20px;
+  margin: 12px 10px;
   font-size: 14px;
   font-weight: bold;
   border: 1px solid #e5cff7;
@@ -160,6 +167,10 @@ const RepoItemButton = styled.button`
     color: #59535e;
     background-color: #e5cff7;
   }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
 `;
 
 const StyledInput = styled.input`

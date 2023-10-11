@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 import { FC } from "react";
+import React from "react";
 
 export const Header: FC = () => {
   return (

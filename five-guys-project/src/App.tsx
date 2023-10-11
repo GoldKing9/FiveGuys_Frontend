@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 import { MainPage } from './pages/MainPage';
 import GlobalStyle from './GlobalStyle';
 import EditingPage from './pages/EditingPage';
+import React from 'react';
 
 function App() {
 

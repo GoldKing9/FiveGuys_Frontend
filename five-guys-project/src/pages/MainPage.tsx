@@ -5,14 +5,14 @@ import styled from "styled-components";
 import { onCloseType, RepoType, updateRepoType } from "../utils/types";
 import axios from "axios";
 import { device } from "../utils/responsive";
+// import InviteUserModal from "../components/InviteUserModal";
+// import { createContext, useContext} from "react";
+
+// type RepoIdContextType = number | undefined
+
+// export const RepoIdContext = createContext<RepoIdContextType>(undefined)
 
 interface CreateRepoFormProps extends onCloseType, updateRepoType {}
-
-// axios.defaults.baseURL = "http://www.burgerclub.shop/";
-
-// const apiClient = axios.create({
-//   baseURL: 'http://www.burgerclub.shop/api/repo'
-// });
 
 const CreateRepoForm: React.FC<CreateRepoFormProps> = ({
   onClose,
@@ -46,15 +46,13 @@ const CreateRepoForm: React.FC<CreateRepoFormProps> = ({
         }
       );
       if (res.status === 200) {
-        const now = new Date().toISOString().split("T")[0];
-
         if (res.data.data) {
-          console.log(res.data)
+          console.log(res.data);
           const newRepo: RepoType = {
             repoId: res.data.data.repoId,
             repoName: repoName,
-            createdAt: now,
-            updatedAt: now,
+            createdAt: res.data.data.createdAt,
+            updatedAt: res.data.data.updatedAt,
             bookmark: false,
             invitedUserCnt: 0,
             isInvited: false,
@@ -108,12 +106,13 @@ const CreateRepoForm: React.FC<CreateRepoFormProps> = ({
 export const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [myRepos, setMyRepos] = useState<RepoType[]>([]);
-  const [myInvitedRepos, mySetInvitedRepos] = useState<RepoType[]>([]);
+  const [myInvitedRepos, setMyInvitedRepos] = useState<RepoType[]>([]);
+  // const [currentRepoId, setCurrentRepoId] = useState<number | undefined>();
 
   useEffect(() => {
-    const fetchMyRepos = async () => {
+    async function fetchData() {
       try {
-        const response = await axios.get(
+        const myRepoResponse = await axios.get(
           "http://www.burgerclub.shop/api/repo/my?page=0&size=10",
           {
             headers: {
@@ -122,20 +121,17 @@ export const MainPage = () => {
             },
           }
         );
-
-        if (response.data.status === "Success") {
-          setMyRepos(response.data.data.repoList);
+        console.log("myRepoResponse:", myRepoResponse);
+        if (myRepoResponse.data.status === "Success") {
+          setMyRepos(myRepoResponse.data.data.repoList);
         } else {
-          console.error("Failed to fetch my repos:", response.data.message);
+          console.error(
+            "Failed to fetch my repos:",
+            myRepoResponse.data.message
+          );
         }
-      } catch (error) {
-        console.error("Error while fetching my repos:", error);
-      }
-    };
 
-    const fetchInvitedRepos = async () => {
-      try {
-        const response = await axios.get(
+        const InvitedRepoResponse = await axios.get(
           "http://www.burgerclub.shop/api/repo/invited?page=0&size=10",
           {
             headers: {
@@ -144,22 +140,21 @@ export const MainPage = () => {
             },
           }
         );
-
-        if (response.data.status === "Success") {
-          mySetInvitedRepos(response.data.data.repoList);
+        console.log("InvitedRepoResponse:", InvitedRepoResponse);
+        if (InvitedRepoResponse.data.status === "Success") {
+          setMyInvitedRepos(InvitedRepoResponse.data.data.repoList);
         } else {
           console.error(
             "Failed to fetch invited repos:",
-            response.data.message
+            InvitedRepoResponse.data.message
           );
         }
       } catch (error) {
-        console.error("Error while fetching invited repos:", error);
+        console.error("Error:", error);
       }
-    };
+    }
 
-    fetchMyRepos();
-    fetchInvitedRepos();
+    fetchData();
   }, []);
 
   const handleRepoEdit = (repoId: number, newName: string) => {
@@ -228,9 +223,9 @@ export const MainPage = () => {
             <ModalTitle>Five Guys IDE</ModalTitle>
             <CreateRepoForm
               onClose={() => setIsModalOpen(false)}
-              updateRepo={(newRepo) =>
-                setMyRepos((prevRepos) => [newRepo, ...prevRepos])
-              }
+              updateRepo={(newRepo) => {
+                setMyRepos((prevRepos) => [newRepo, ...prevRepos]);
+              }}
             />
           </Modal>
         )}
@@ -245,15 +240,16 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #383142;
-  padding: 30px;
-  width: 250px;
-  height: 250px;
+  margin: 0 auto;
+  width: 300px;
+  height: 300px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 const MainContainer = styled.div`
@@ -280,7 +276,7 @@ const MainContainer = styled.div`
   }
 
   @media ${device.laptop} {
-    width: 70vw;
+    width: 75vw;
     height: 50vw;
   }
 `;
@@ -366,13 +362,15 @@ const CreateRepoButton = styled.button`
 const CloseButton = styled.button`
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   color: #59535e;
   font-weight: bold;
   background-color: #e5cff7;
   border: none;
   font-size: 18px;
   border-radius: 3px;
+  padding: 4px 8px;
+  margin: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
@@ -383,6 +381,8 @@ const CloseButton = styled.button`
 
 const ModalTitle = styled.h2`
   color: #e5cff7;
+  font-size: 24px;
+  margin: 15px auto;
 `;
 
 const UploadButton = styled.div`
@@ -422,6 +422,8 @@ const StyledInput = styled.input`
   padding: 10px 15px;
   text-align: center;
   font-size: 16px;
+  cursor: pointer;
+  margin: 10px auto;
   transition: all 0.3s ease;
   &:focus {
     outline: none;
@@ -440,7 +442,7 @@ const StyledButton = styled.button`
   border-radius: 15px;
   padding: 10px 15px;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
