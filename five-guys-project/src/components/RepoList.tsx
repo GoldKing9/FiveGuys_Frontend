@@ -1,44 +1,40 @@
 import RepoItem from "./RepoItem";
 import styled from "styled-components";
-import { RepoListProps } from "../utils/types";
-// import { useEffect } from "react";
-// import { useState } from "react";
+import { RepoListProps, RepoType } from "../utils/types";
+import React, { useState, useEffect } from "react";
 
 const RepoList: React.FC<RepoListProps> = ({
   myRepos,
-  invitedRepos,
+  // invitedRepos,
   onRepoEdit,
   onRepoDelete,
 }) => {
-  // const [myRepos, setMyRepos] = useState(initialMyRepos);
-  // const [invitedRepos, setInvitedRepos] = useState(initialInvitedRepos);
+  const [sortedMyRepos, setSortedMyRepos] = useState<RepoType[]>([]);
 
-  const sortedMyRepos = [...myRepos].sort(
-    (a, b) => (b.bookmark ? 1 : 0) - (a.bookmark ? 1 : 0)
-  );
+  useEffect(() => {
+    setSortedMyRepos(
+      [...myRepos].sort((a, b) => (b.bookmark ? 1 : 0) - (a.bookmark ? 1 : 0))
+    );
+  }, [myRepos]);
 
-  const sortedInvitedRepos = [...invitedRepos].sort(
-    (a, b) => (b.bookmark ? 1 : 0) - (a.bookmark ? 1 : 0)
-  );
 
-  // const handleBookmark = (repoId: number) => {
-  //     const repoIndex = myRepos.findIndex((repo) => repo.repoId === repoId);
-  //     if (repoIndex > -1) {
-  //       const updatedRepos = [...myRepos];
-  //       updatedRepos[repoIndex].bookmark = !updatedRepos[repoIndex].bookmark;
-  //       setMyRepos(updatedRepos); // 상태 업데이트
-  //     } else {
-  //       const invitedRepoIndex = invitedRepos.findIndex(
-  //         (repo) => repo.repoId === repoId
-  //       );
-  //       if (invitedRepoIndex > -1) {
-  //         const updatedInvitedRepos = [...invitedRepos];
-  //         updatedInvitedRepos[invitedRepoIndex].bookmark =
-  //           !updatedInvitedRepos[invitedRepoIndex].bookmark;
-  //         setInvitedRepos(updatedInvitedRepos); // 상태 업데이트
-  //       }
-  //     }
-  // };
+  const handleBookmarkChange = (repoId: number) => {
+    const updateRepos = (repos: RepoType[]) => {
+      return repos
+        .map((repo) => {
+          if (repo.repoId === repoId) {
+            return {
+              ...repo,
+              bookmark: !repo.bookmark,
+            };
+          }
+          return repo;
+        })
+        .sort((a, b) => (b.bookmark ? 1 : 0) - (a.bookmark ? 1 : 0));
+    };
+
+    setSortedMyRepos((prevRepos) => updateRepos(prevRepos));
+  };
 
   return (
     <RepoListContainer>
@@ -48,18 +44,17 @@ const RepoList: React.FC<RepoListProps> = ({
           repo={repo}
           onEdit={onRepoEdit}
           onDelete={onRepoDelete}
-          // onBookmark={handleBookmark}
+          onBookmark={handleBookmarkChange}
         />
       ))}
-      {sortedInvitedRepos.map((repo) => (
+      {/* {sortedInvitedRepos.map((repo) => (
         <RepoItem
           key={repo.repoId}
           repo={repo}
           onEdit={onRepoEdit}
           onDelete={onRepoDelete}
-          // onBookmark={handleBookmark}
         />
-      ))}
+      ))} */}
     </RepoListContainer>
   );
 };
@@ -71,23 +66,5 @@ const RepoListContainer = styled.div`
   border-radius: 10px;
   width: 100%;
 `;
-
-// const RepoItemContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   border-bottom: 1px solid #e5cff7;
-//   padding: 0 10px;
-//   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-//   transition: box-shadow 0.3s ease;
-
-//   &:hover {
-//     box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.5);
-//   }
-// `;
-
-// const RepoItemInfo = styled.p`
-//   color: white;
-// `;
 
 export default RepoList;
